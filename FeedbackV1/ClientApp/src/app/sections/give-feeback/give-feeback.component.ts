@@ -62,9 +62,12 @@ export class GiveFeebackComponent implements OnInit {
     this.feedbackService.getMyFeedbacks(this.authService.decodedToken.nameid, 1, 10)
                       .subscribe((res: PaginatedResult<Feedback[]>) => {
                         this.feedbacks = res.result;
-                        if (this.feedbacks[1].pending === true) {
+                        if (this.feedbacks[1].pending === true ) {
                           this.pending = true;
                           this.feedbackService.requestSend.next(this.pending);
+                          // console.log('length:', this.feedbacks.length);
+                          // console.log( 'feed de 0:', this.feedbacks[0].pending);
+
                       } else {
                         this.pending = false;
                         this.feedbackService.requestSend.next(this.pending);

@@ -117,7 +117,7 @@
 
 </body>
 </html>-->
-<div class='split-pane col-xs-12 col-sm-6 uiux-side'>
+<div  *ngIf="!loggedIn()"  class='split-pane col-xs-12 col-sm-6 uiux-side'>
   <div>
     <!--<img src='https://bit.ly/BCR-design'>-->
     <div class='text-content'>
@@ -129,7 +129,7 @@
     </a>
   </div>
 </div>
-<div class='split-pane col-xs-12 col-sm-6 frontend-side'>
+<div  *ngIf="!loggedIn()"  class='split-pane col-xs-12 col-sm-6 frontend-side'>
   <div>
     <!--<img src='https://bit.ly/bcr-dev'>-->
     <div class='text-content'>
@@ -141,7 +141,7 @@
     </a>
   </div>
 </div>
-<div id='split-pane-or'>
+<div  *ngIf="!loggedIn()"  id='split-pane-or'>
   <div>
     <img src='../assets/Optimized By ORTEC mark web.png'>
   </div>
