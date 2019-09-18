@@ -1,47 +1,148 @@
-        <app-navbar></app-navbar>
-        <!-- <div class="container">
-            <app-home *ngIf="!loggedIn()"></app-home>
-        </div> -->
-          
-    
+<app-navbar></app-navbar>
 
-        <div *ngIf="loggedIn()" class="container-fluid">
-        <div  class="row" id="mainContent">
-            <app-sidebar 
-                class="col-sm-2 col-md-2 d-none d-sm-block sidebar "
-                id="Sidebar">
+<div *ngIf="loggedIn()" class="container-fluid">
+  <div class="row" id="mainContent">
+    <app-sidebar class="col-sm-2 col-md-2 d-none d-sm-block sidebar "
+                 id="Sidebar">
 
-            </app-sidebar>
-            <div class="col-sm-10 ml-sm-auto col-md-10  pt-3 " id="dashboard">
-            <!-- <app-section-adduser></app-section-adduser> -->
-            <router-outlet ></router-outlet>
-            </div>
-        </div> 
+    </app-sidebar>
+    <div class="col-sm-10 ml-sm-auto col-md-10  pt-3 " id="dashboard">
+      <!-- <app-section-adduser></app-section-adduser> -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<!--<div *ngIf="!loggedIn()" class="login">
+  <img src="../assets/logo.png" width="420" height="420">
+  <div class="container ">
+
+    <div class="jumbotron mt-5">
+      <div class="container">
+        <h1 class="display-4">Welcome!</h1>
+        <p class="lead">You have to login to use this site!</p>
+
+      </div>
+    </div>
+  </div>
+</div>-->
+<!--<div class=" login card mb-3 container" style="max-width: 540px;" *ngIf="!loggedIn()">
+  <div class="container">
+    <div class="row no-gutters ">
+      <div class="col-md-4">
+        <img src="../assets/Optimized By ORTEC mark web.png" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">   Welcome!</h5>
+          <p class="card-text">You have to login to use this site!</p>
         </div>
-       
-          
+      </div>
+    </div>
+  </div>
+</div>-->
+<!--<div class="w3-row">
+  <div class="w3-half w3-black w3-container w3-center" style="height:40px">
+  </div>
+  <div class="w3-half w3-blue-grey w3-container" style="height:700px">
+    <div class="w3-padding-64 w3-center">
 
-        <div *ngIf="!loggedIn()" class="login">
-          <!--<img src="../../src/assets/logo.png" width="420" height="420">-->
-          <div class="container ">
+      <img src="../assets/Optimized By ORTEC mark web.png" class="w3-margin w3-circle" alt="Person" style="width:50%">
+      <div class="w3-left-align w3-padding-large">
+        <p>Welcome</p>
+        <p>You have to login to use this site.</p>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!--<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial;
+      color: white;
+    }
 
-            <div class="jumbotron mt-5">
-              <div class="container">
-                <h1 class="display-4">Welcome!</h1>
-                <p class="lead">You have to login to use this site!</p>
+    .split {
+      height: 100%;
+      width: 50%;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
 
-              </div>
-            </div>
-          </div>
+    .left {
+      left: 0;
+      background-color: #E5F0F7;
+    }
 
-        </div>
-    <!-- <div *ngIf="!loginMode" class="login" >
-            <div class="row">
-                    <div class="col-lg-4 col-md-4"></div>
-                    <div class="col-lg-4 col-md-4">
-                        <app-login loginPushed="onLoginPushed()" ></app-login>
-                    </div>
-                    <div class="col-lg-4 col-md-4"></div>
-            </div>
-            </div> -->
+    .right {
+      right: 0;
+      background-color: #0071B3;
+    }
 
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+      .centered img {
+        width: 250px;
+        border-radius: 50%;
+      }
+  </style>
+</head>
+<body>
+
+  <div class="split left">
+    <div class="centered">
+      <img src="../assets/Optimized By ORTEC mark web.png" alt="Avatar woman">
+    </div>
+  </div>
+
+  <div class="split right">
+    <div class="centered">
+      <i class="fas fa-sign-in-alt"></i>
+      <h2>Welcome</h2>
+      <p>You have to login to use this site.</p>
+    </div>
+  </div>
+
+</body>
+</html>-->
+<div class='split-pane col-xs-12 col-sm-6 uiux-side'>
+  <div>
+    <!--<img src='https://bit.ly/BCR-design'>-->
+    <div class='text-content'>
+      <!--<div class="bold">Learn more</div>
+      <div class='big'>ABOUT FEEDBACKS</div>-->
+    </div>
+    <a class="button" href="https://www.15five.com/blog/9-ways-to-give-effective-employee-feedback/" target="_blank">
+      GO TO GUIDE
+    </a>
+  </div>
+</div>
+<div class='split-pane col-xs-12 col-sm-6 frontend-side'>
+  <div>
+    <!--<img src='https://bit.ly/bcr-dev'>-->
+    <div class='text-content'>
+      <!--<div class="bold">Learn more</div>
+      <div class='big'>ABOUT ORTEC</div>-->
+    </div>
+    <a class='button' href="https://ortec.com/en-us" target="_blank">
+      TAKE ME TO ORTEC
+    </a>
+  </div>
+</div>
+<div id='split-pane-or'>
+  <div>
+    <img src='../assets/Optimized By ORTEC mark web.png'>
+  </div>
+</div>
