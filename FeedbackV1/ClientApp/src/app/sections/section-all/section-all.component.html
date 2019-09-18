@@ -1,0 +1,134 @@
+<div *ngIf="!isLoading" class="card mt-5">
+    <div class="card-body forPadding">
+      <div  class="row">
+        <nav class="navbar">
+          
+          <input class="form-control" type="text" name="search" placeholder="Search..." [(ngModel)]="filter">
+        </nav>
+        <div class="form-group">
+            <form class="form-inline mt-3" #form="ngForm" (ngSubmit)="loadUsers()" novalidate>
+  
+                <div class="form-group px-2">
+                  <button class="btn filter" type="submit" (click)="onClick()">Show only my Team</button>
+                </div>
+                <!-- <button type="submit" class="btn btn-primary" style="margin-left:10px">Apply Filters</button> -->
+                <button type="button" class="btn btn-info" (click)="resetFilters()" style="margin-left:10px">Reset Filters</button>
+              
+              </form>
+        </div>
+  
+    
+        
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>
+                Department
+              </th>
+              <th style="cursor: pointer" (click)="onSort()">
+                Nume
+                <span class="fas fa-sort"  [ngClass]="{' fa-sort-up':reverse, 'fa-sort-down':!reverse}"></span>
+              </th>
+              <!--<th (click)="sort('genre')">
+      ID
+      <span class="fas fa-sort" *ngIf="key =='genre'" [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span>
+    </th>-->
+              <th>
+                Email
+                <!-- <span class="fas fa-sort"  [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span> -->
+              </th>
+              <th>
+                Manager
+                <!-- <span class="fas fa-sort"  [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span> -->
+              </th>
+  
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+              <!-- paginate: { itemsPerPage: 10, currentPage: p }; -->
+  
+            <tr *ngFor="let user of users  | filter:filter let i = index">
+              <th scope="row">{{ ((pagination.currentPage-1) * pagination.itemsPerPage) + i+1}}</th>
+              <td>{{departamente[user.deP_ID]}}</td>
+              <td >{{user.name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.manager_ID}}</td>
+              <td><a [routerLink]="['/all/', user.id]" [class.disabled]="!tableLoaded">Offer feedback</a></td>
+              <td><a [routerLink]="['/request/', user.id]" [class.disabled]="!tableLoaded"  *ngIf="isManager(user.id)">Request</a></td>
+              <td><a [routerLink]="['/all/update/', user.id]" [class.disabled]="!tableLoaded" *ngIf="isManager(user.id)" >Update</a></td>
+              <td><a style="cursor: pointer" class="delete" (click)="onDelete(user.id)" *ngIf="isManager(user.id)">Delete</a></td>
+  
+            </tr>
+          </tbody>
+  
+        </table>
+  
+   
+      </div>
+    </div>
+  
+      <!-- <div class="d-flex justify-content-center">
+          <pagination-controls  (pageChange)="p = $event"></pagination-controls>
+      </div> -->
+  
+    
+  </div>
+  
+  <div *ngIf="isLoading" class="d-flex justify-content-center  loading">
+      <app-loading-spinner></app-loading-spinner>
+  </div>
+  
+  <div *ngIf="pagination.totalPages > 1" class="d-flex justify-content-center pagination mt-3">
+      <pagination [boundaryLinks]="true" 
+                  [totalItems]="pagination.totalItems"
+                  [(ngModel)]="pagination.currentPage"
+                  [itemsPerPage]="pagination.itemsPerPage"
+                  (pageChanged)="pageChanged($event)"
+                  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    
+      </pagination>
+    </div>
+  
+  
+  
+  <!--<div class="row mt-4">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10">
+        <div class="card">
+            <table class="table table-hover table-inverse ">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">dep_id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">email</th>
+                        <th scope="col">manager</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users; let i=index ">
+                            <td scope="row">{{i+1}}</td>
+                            <td>{{departamente[user.deP_ID]}}</td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.manager_ID}}</td>
+                            <td><a (click)="onDelete(user.id)">Delete</a></td>
+                            <td><a [routerLink]="['/request/', user.id]">Request</a></td>
+                            <td><a [routerLink]="['/all/update/', user.id]">Update</a></td>
+                            <td><a [routerLink]="['/all/', user.id]"  >Give</a></td>
+                        </tr>
+                    </tbody>
+                  </table>
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>-->
