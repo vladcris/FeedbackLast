@@ -6,6 +6,7 @@ import { UserService } from 'src/app/_services/user.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DialogService } from '../../_services/dialog.service';
 
 @Component({
   selector: 'app-section-all',
@@ -44,7 +45,8 @@ export class SectionAllComponent implements OnInit {
   constructor(private userService: UserService,
               private alertify: AlertifyService,
               private modalService: BsModalService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private dialogService: DialogService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -65,6 +67,7 @@ export class SectionAllComponent implements OnInit {
     this.userParams.orderBy = 'asc';
     this.userParams.team = false;
     this.userParams.role = null;
+    this.userParams.search = '';
     //  this.pagination.currentPage = 1;
     //  this.pagination.itemsPerPage = 10;
 
@@ -100,6 +103,12 @@ export class SectionAllComponent implements OnInit {
     }
   }
 
+  onEnter(event) {
+    this.userParams.search = event;
+    this.pagination.currentPage = 1;
+    this.loadUsers();
+  }
+
   pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.loadUsers();
@@ -121,8 +130,9 @@ export class SectionAllComponent implements OnInit {
     }
   }
 
-  onSort() {
-    if (this.userParams.orderBy === 'asc') {
+  onSortName() {
+    if (this.userParams.orderBy === 'asc' || this.userParams.orderBy === 'man-asc' ||
+        this.userParams.orderBy === 'man-desc' || this.userParams.orderBy === null) {
       this.userParams.orderBy = 'desc';
       this.reverse = false;
     } else {
@@ -132,22 +142,47 @@ export class SectionAllComponent implements OnInit {
     this.loadUsers();
   }
 
+  onSortManager() {
+    if (this.userParams.orderBy === 'asc' || this.userParams.orderBy === 'desc'  ||
+        this.userParams.orderBy === null || this.userParams.orderBy === 'man-desc') {
+      this.userParams.orderBy = 'man-asc';
+      this.reverse = false;
+    } else if (this.userParams.orderBy === 'man-asc') {
+      this.userParams.orderBy = 'man-desc';
+      this.reverse = true;
+    }
+    this.loadUsers();
+  }
+
 
   resetFilters() {
     this.userParams.team = false;
     this.userParams.orderBy = null;
-    this.filter = null;
+    this.filter = '';
+    this.userParams.search = '';
     this.loadUsers();
   }
 
-  onDelete(id: any) {
-    this.userService.deleteUser(id).subscribe(() => {
+  onDelete(user: any) {
+    this.dialogService.openConfirmDialog('Are you sure you want to delete ' + user.name + ' ?')
+      .afterClosed().subscribe(res => {
+        if (res) {
+          this.userService.deleteUser(user.id).subscribe(() => {
 
-      this.alertify.success('User deleted!');
-    }, error => {
-      this.alertify.error('Error deleting user!');
-    });
+            this.alertify.success('User deleted!');
+            this.loadUsers();
+          }, error => {
+            this.alertify.error('Error deleting user!');
+          });
+        }
+      });
+
   }
+  // public openConfirmationDialog() {
+  //  this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to ... ?')
+  //    .then((confirmed) => console.log('User confirmed:', confirmed))
+  // .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+  // }
 
   // isEmployee() {
   //   return localStorage.getItem('role') !== 'employee';

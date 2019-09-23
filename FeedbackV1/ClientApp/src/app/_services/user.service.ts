@@ -34,6 +34,7 @@ getUsers(userParams?, page?, itemsPerPage?): Observable<PaginatedResult<User[]>>
       params = params.append('team', userParams.team);
       params = params.append('orderBy', userParams.orderBy);
       params = params.append('role', userParams.role);
+      params = params.append('search', userParams.search);
  }
 
   return this.http.get<User[]>(this.baseUrl + 'user', {observe: 'response', params})
@@ -94,6 +95,10 @@ getUsersByDepartament(id): Observable<User> {
 
 updateRequest(id: string, user: User) {
   return this.http.put(this.baseUrl + 'user/' + id, user);
+}
+
+adminSoftDelete(user: User) {
+  return this.http.put(this.baseUrl + 'user/' + 'undoDelete' , user);
 }
 
 deleteUser(id: string) {

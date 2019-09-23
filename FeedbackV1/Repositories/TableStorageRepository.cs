@@ -10,6 +10,8 @@ using System.Net;
 using FeedbackV1.Models;
 using System.Security.Claims;
 using FeedbackV1.Dtos;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace FeedbackV1.Repositories
 {
@@ -421,6 +423,15 @@ namespace FeedbackV1.Repositories
                     userParams.Role = null;
                 }
             }
+
+            if (!string.IsNullOrEmpty(userParams.Search)) 
+            {   
+                
+                results = results.Where(x => x.Name.ToLower().Contains(userParams.Search.ToLower()) ||
+                                             x.Manager_ID.ToLower().Contains(userParams.Search.ToLower()) ||
+                                             x.Email.ToLower().Contains(userParams.Search.ToLower())
+                                            );
+            }
           
 
             if (!string.IsNullOrEmpty(userParams.OrderBy))
@@ -432,6 +443,12 @@ namespace FeedbackV1.Repositories
                         break;
                     case "asc":
                         results = results.OrderBy(u => u.Name);
+                        break;
+                    case "man-asc":
+                        results = results.OrderBy(u => u.Manager_ID);
+                        break;
+                    case "man-desc":
+                        results = results.OrderByDescending(u => u.Manager_ID);
                         break;
                     default:
                         results = results.OrderBy(u => u.Name);
@@ -584,6 +601,21 @@ namespace FeedbackV1.Repositories
             // descendants = descendants.Where(x => x.IsDeleted == false).ToList();
 
             return descendants;
+        }
+
+
+
+        static async Task Execute(User sender, User receiver)
+        {
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(sender.Email, sender.Name);
+            var subject = "Sending with Twilio SendGrid is Fun";
+            var to = new EmailAddress(receiver.Email, receiver.Name);
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg); 
         }
     }
 }

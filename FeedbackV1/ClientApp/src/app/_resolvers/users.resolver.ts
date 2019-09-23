@@ -13,6 +13,7 @@ export class UsersResolver implements Resolve<User[]> {
 userParams: any = {
     team: false,
     orderBy: 'asc',
+    search: '',
     role: null
 };
 

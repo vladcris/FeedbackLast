@@ -11,7 +11,7 @@ namespace FeedbackV1.Dtos
         public string Role { get; set; }
         public DateTime Timestamp{get; set;}
         public string Manager_ID { get; set; }
-        public string IsDeleted { get; set; }
+        public Boolean IsDeleted { get; set; }
 
     }
 }

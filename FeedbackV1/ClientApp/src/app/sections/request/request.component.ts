@@ -104,7 +104,7 @@ export class RequestComponent implements OnInit {
       }
     });
     // console.log(this.angajatName);
-    // console.log(this.angajat);
+    console.log(this.angajat);
   }
 
   onDelete(item) {
@@ -137,7 +137,7 @@ export class RequestComponent implements OnInit {
         this.form.pending = true;
         this.form.id_manager = this.authService.decodedToken.nameid;
         this.form.id_receiver = this.route.snapshot.params.id;
-        // console.log(this.form);
+        console.log(this.angajat);
         this.feedbacksService.sendRequest2(this.form, user).subscribe(() => {
           this.alertify.success('Request Sent!');
         }, error => {

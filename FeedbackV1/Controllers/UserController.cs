@@ -43,12 +43,13 @@ namespace FeedbackV1.Controllers
 
                 var usersAdmin = await repo.GetUsersWithoutParamsForAdmin();
 
+                usersAdmin = usersAdmin.Where(x => x.RowKey != userParams.UserId).OrderBy(x => x.IsDeleted);
                 var usersForAdmin = _mapper.Map<IEnumerable<UserDto>>(usersAdmin);
 
                 return Ok(usersForAdmin);
             }
 
-
+            // get all user for request minus the requested one
             if(!string.IsNullOrEmpty(userParams.UserId)) {
                 users = users.Where(x => x.RowKey != userParams.UserId).OrderBy(x => x.Name);
             }
@@ -129,9 +130,20 @@ namespace FeedbackV1.Controllers
             return Ok();
         }
 
+        [HttpPut("undoDelete")]
+        public async Task<IActionResult> SoftDeleteAdmin(UserDto userDto)
+        {   
+            var repo = new TableStorageRepository();
+            var cards = await repo.GetUser(userDto.ID);
+            _mapper.Map(userDto, cards);
+            await repo.PostEntityUser(cards);
+            
+            return Ok();
+        }
+
+
         [HttpDelete("{id}")]
-        
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUserSoft(string id)
         {
             // var repo = new TableStorageRepository();
             // var cards = await repo.GetUser(id);
@@ -144,6 +156,8 @@ namespace FeedbackV1.Controllers
             await repo.PostEntityUser(cards) ;
             return Ok();
         }
+
+
 
     }
 

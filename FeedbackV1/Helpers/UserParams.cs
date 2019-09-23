@@ -23,6 +23,7 @@ namespace FeedbackV1
         }
         public string OrderBy { get; set; }
         public string Manager { get; set; }
+        public string Search { get; set; } = "";
         public Boolean Pending { get; set; } = false; // pentru ReceiverController
 
         

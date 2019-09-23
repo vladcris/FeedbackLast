@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace FeedbackV1.Controllers
 {     
@@ -40,13 +40,21 @@ namespace FeedbackV1.Controllers
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             //validate
-
+             var repo = new TableStorageRepository();
             userForRegisterDto.Email = userForRegisterDto.Email.ToLower();
 
               if(await _repo.UserExists(userForRegisterDto.Email))
                  return BadRequest("Email already exists!");
             
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
+
+
+            ////sendgrid
+            var CurrentUserId = (User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userLogged = await repo.GetUser(CurrentUserId);
+            Execute(userLogged,userToCreate).Wait();
+
+            //// end
 
             var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
 
@@ -56,6 +64,22 @@ namespace FeedbackV1.Controllers
             return CreatedAtRoute("GetUser", new {controller = "User", id = createdUser.Id}, userToReturn);
         }
 
+            static async Task Execute(User sender, User receiver)
+             {
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(sender.Email, sender.Name);
+            var subject = "Your account was created";
+            var to = new EmailAddress(receiver.Email, receiver.Name);
+            var plainTextContent = "Username : receiver.Name, Password:";
+            var htmlContent = "<strong>Username :  receiver.Email!</strong> <br> <strong> Password : userForRegister.Password</strong> ";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
+           
+            }
+
+
+
         [AllowAnonymous]
         [HttpPost("login")]
 
@@ -63,7 +87,7 @@ namespace FeedbackV1.Controllers
         {
             var userFromRepo = await _repo.Login(userForRegisterDto.Email, userForRegisterDto.Password);
 
-            if(userFromRepo == null)
+            if(userFromRepo == null || userFromRepo.IsDeleted == true)
             return Unauthorized();
 
             var claims = new[]

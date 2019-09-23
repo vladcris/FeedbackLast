@@ -17,6 +17,7 @@ namespace FeedbackV1.Helpers
           CreateMap<Departament, DepartamentListDto>();
           CreateMap<UserForRegisterDto, User>();
           CreateMap<UpdateUserDto, User>();
+          CreateMap<UserDto, User>();
           CreateMap<GiveFeedbackDto, Feedbacks>();
         }
     }

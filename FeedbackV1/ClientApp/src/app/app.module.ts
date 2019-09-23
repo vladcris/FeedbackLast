@@ -47,6 +47,11 @@ import { RequestResolver } from './_resolvers/request.resolver';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { LoadingSpinnerComponent } from './shared/loading-spinner';
 import { MaterialModule } from './material/material.module';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { MatDialogModule, MatDialogClose } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
 
 
 
@@ -87,11 +92,13 @@ export function tokenGetter() {
       UpdateUserComponent,
       TimeAgoPipe,
       LoadingSpinnerComponent,
-      AdminSectionComponent
+      AdminSectionComponent,
+      ConfirmDialogComponent,
    ],
    imports: [
       BrowserModule,
        AppRoutingModule,
+       MatDialogModule,
        MaterialModule,
        Ng2SearchPipeModule, // including into imports
        Ng2OrderModule, // importing the sorting package here
@@ -100,7 +107,9 @@ export function tokenGetter() {
       FormsModule,
       HttpClientModule,
       TooltipModule.forRoot(),
+      ButtonsModule.forRoot(),
       PaginationModule.forRoot(),
+      TabsModule.forRoot(),
       BsDropdownModule.forRoot(),
       ModalModule.forRoot(),
       ProgressbarModule.forRoot(),
@@ -132,6 +141,7 @@ export function tokenGetter() {
    ],
    bootstrap: [
       AppComponent
-   ]
+   ],
+   entryComponents: [ConfirmDialogComponent]
 })
 export class AppModule { }

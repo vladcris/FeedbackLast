@@ -1,58 +1,130 @@
-<!-- <div class="search-div">
-    <button mat-raised-button>
-        <mat-icon>add</mat-icon>Create
-    </button>
-    <mat-form-field class="search-form-field" floatLabel="never">
-        <input matInput [(ngModel)]="searchKey" placeholder="search" autocomplete="off"> 
-        <button mat-button matSuffix mat-icon-button aria-label="clear"></button>
-        <mat-icon>close</mat-icon>
-    </mat-form-field>
-</div> -->
-<div class="mat-elevation-z8">
-    <mat-table [dataSource]="listData" matSort>
-        <ng-container matColumnDef="department">
-            <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.deP_ID}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="fullName">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="email">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="manager">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Manager</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.manager_ID}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="role">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.role}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="deleted">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>IsDeleted</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.isDeleted}}</mat-cell>
-        </ng-container>
+    <!-- <div class="mr-5">
+          <div class="container-fluid">
+         <div class="row ">
+       <pre class="card card-block card-header">{{uncheckableRadioModel || 'null'}}</pre> 
+      <div class="btn-group " btnRadioGroup [(ngModel)]="uncheckableRadioModel">
+        <label class="btn btn-lg btn-info" btnRadio="Left"
+               uncheckable tabindex="0" role="button">Manage Users</label>
+        <label class="btn btn-lg btn-info" btnRadio="Right"
+               uncheckable tabindex="0" role="button">Manage Teams</label>
+      </div>
+    </div>
+  </div>
+    </div> -->
 
-        <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let row">
-                <button mat-icon-button><mat-icon>launch</mat-icon></button>
-                <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
-            </mat-cell>
-        </ng-container>
+    <div>
+      <tabset>
+        <tab >
+            <ng-template tabHeading>
+                <b>Manage Users</b>
+              </ng-template>
+          <div class="position">
+            <div class="row">
+              <nav class="navbar">
+                <input class="form-control" type="text" name="search" placeholder="Search..." [(ngModel)]="filter">
+              </nav>
+      
+              <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>
+                      Department
+                    </th>
+                    <th class="th-sm" style="cursor: pointer" (click)="sort('name')">
+                      Name
+                      <span class="fas fa-sort" *ngIf="key =='name'" [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span>
+                    </th>
+      
+                    <th class="th-sm" style="cursor: pointer" (click)="sort('email')">
+                      Email
+                      <span  class="fas fa-sort" *ngIf="key =='email'" [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span>
+                    </th>
+                    <th class="th-sm" style="cursor: pointer" (click)="sort('manager_ID')">
+                      Manager
+                      <span class="fas fa-sort" *ngIf="key =='manager_ID'" [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span>
+                    </th>
+                    <th class="th-sm" style="cursor: pointer" (click)="sort('isDeleted')">
+                     Deleted
+                      <span class="fas fa-sort" *ngIf="key =='isDeleted'" [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span>
+                    </th>
+        
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+        
+                  <tr *ngFor="let user of usersTeam | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                    <th scope="row">{{ ((p-1) * itemsPerPage) + i+1}}</th>
+                    <td>{{departamente[user.deP_ID]}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.manager_ID}}</td>
+                    <td >
+                        <div class="custom-control custom-switch">
+                            <input ks type="checkbox" class="custom-control-input" id="{{user.id}}"  (change)="onchange(user)" [checked]="user.isDeleted">
+                            <label class="custom-control-label" for="{{user.id}}"></label>
+                          </div>
+                    </td>
+                    <td>
+                      <a [routerLink]="['/all/update/', user.id]"  >
+                        <i class="far fa-edit fa-lg"
+                          tooltip="Edit! " 
+                          style="cursor: pointer"
+                          placement="right">
+                        </i>
+                      </a>
+                    </td>
+                    <td><a class="delete"  (click)="onDelete()">
+                      <i class="far fa-trash-alt fa-lg"
+                         tooltip="Delete! " 
+                         style="cursor: pointer"
+                         placement="right">
+                      </i>
+                     </a>
+                    </td>
+                    
+        
+                  </tr>
+                </tbody>
+        
+              </table>
+       
+              </div>
+      
+              </div>
+                 <div class="d-flex justify-content-center pagination mt-3">
+              <pagination-controls  (pageChange)="p = $event"></pagination-controls>
+          </div>
+            </div>
+      
+        </tab>
 
-        <ng-container matColumnDef="loading">
-            <mat-footer-cell *matFooterCellDef colspan="6">
-                Loading data...
-            </mat-footer-cell>
-        </ng-container>
+
+        <tab >
+            <ng-template tabHeading>
+                <b>Manage Teams</b>
+              </ng-template>
+          <div>
+             <p>manage teams</p>
+          </div>
+        </tab>
 
 
-        <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayColumns;"></mat-row>
-        <mat-footer-row [ngClass]="{hide: listData!=null}" *matFooterRowDef="['loading']"></mat-footer-row>
-    </mat-table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons ></mat-paginator>
-</div>
+      </tabset>
+    </div>
+
+
+
+   
+
+
+
+    
+
+
+
+    
+  

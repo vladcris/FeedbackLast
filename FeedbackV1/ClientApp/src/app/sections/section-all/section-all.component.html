@@ -2,8 +2,7 @@
     <div class="card-body forPadding">
       <div  class="row">
         <nav class="navbar">
-          
-          <input class="form-control" type="text" name="search" placeholder="Search..." [(ngModel)]="filter">
+          <input class="form-control" type="search" name="search" placeholder="Search..."  [(ngModel)]="filter" (keyup.enter)="onEnter(filter)" >
         </nav>
         <div class="form-group">
             <form class="form-inline mt-3" #form="ngForm" (ngSubmit)="loadUsers()" novalidate>
@@ -18,29 +17,29 @@
         </div>
   
     
-        
+        <div class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
               <th>#</th>
-              <th>
+              <th class="th-sm">
                 Department
               </th>
-              <th style="cursor: pointer" (click)="onSort()">
+              <th class="th-sm" style="cursor: pointer" (click)="onSortName()">
                 Nume
                 <span class="fas fa-sort"  [ngClass]="{' fa-sort-up':reverse, 'fa-sort-down':!reverse}"></span>
               </th>
               <!--<th (click)="sort('genre')">
-      ID
-      <span class="fas fa-sort" *ngIf="key =='genre'" [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span>
-    </th>-->
-              <th>
+               ID
+               <span class="fas fa-sort" *ngIf="key =='genre'" [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span>
+              </th>-->
+              <th class="th-sm">
                 Email
                 <!-- <span class="fas fa-sort"  [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span> -->
               </th>
-              <th>
+              <th class="th-sm" style="cursor: pointer" (click)="onSortManager()">
                 Manager
-                <!-- <span class="fas fa-sort"  [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span> -->
+                <span class="fas fa-sort"  [ngClass]="{' fa-sort-up':reverse,' fa-sort-down':!reverse}"></span>
               </th>
   
               <th></th>
@@ -52,16 +51,48 @@
           <tbody>
               <!-- paginate: { itemsPerPage: 10, currentPage: p }; -->
   
-            <tr *ngFor="let user of users  | filter:filter let i = index">
+            <tr *ngFor="let user of users  let i = index">
               <th scope="row">{{ ((pagination.currentPage-1) * pagination.itemsPerPage) + i+1}}</th>
               <td>{{departamente[user.deP_ID]}}</td>
               <td >{{user.name}}</td>
               <td>{{user.email}}</td>
               <td>{{user.manager_ID}}</td>
-              <td><a [routerLink]="['/all/', user.id]" [class.disabled]="!tableLoaded">Offer feedback</a></td>
-              <td><a [routerLink]="['/request/', user.id]" [class.disabled]="!tableLoaded"  *ngIf="isManager(user.id)">Request</a></td>
-              <td><a [routerLink]="['/all/update/', user.id]" [class.disabled]="!tableLoaded" *ngIf="isManager(user.id)" >Update</a></td>
-              <td><a style="cursor: pointer" class="delete" (click)="onDelete(user.id)" *ngIf="isManager(user.id)">Delete</a></td>
+              <td>
+                <a [routerLink]="['/all/', user.id]" >
+                  <i class="far fa-comment fa-lg"
+                  tooltip="Offer Feedback! " 
+                  style="cursor: pointer"
+                  placement="right">
+                </i>
+                </a>
+             </td>
+              <td>
+                <a [routerLink]="['/request/', user.id]" *ngIf="isManager(user.id)">
+                  <i  class="fas fa-tasks fa-lg"
+                  tooltip="Request Feedback! " 
+                  style="cursor: pointer"
+                  placement="right">
+                </i>
+                </a>
+              </td>
+              <td>
+                <a [routerLink]="['/all/update/', user.id]"  *ngIf="isManager(user.id)" >
+                  <i class="far fa-edit fa-lg"
+                  tooltip="Edit! " 
+                  style="cursor: pointer"
+                  placement="right">
+                </i>
+                </a>
+            </td>
+              <td>
+                <a style="cursor: pointer" class="delete" (click)="onDelete(user)" *ngIf="isManager(user.id)">
+                    <i class="far fa-trash-alt fa-lg"
+                    tooltip="Delete! " 
+                    style="cursor: pointer"
+                    placement="right">
+                 </i>
+                </a>
+             </td>
   
             </tr>
           </tbody>
@@ -71,6 +102,7 @@
    
       </div>
     </div>
+  </div>
   
       <!-- <div class="d-flex justify-content-center">
           <pagination-controls  (pageChange)="p = $event"></pagination-controls>
@@ -89,6 +121,7 @@
                   [(ngModel)]="pagination.currentPage"
                   [itemsPerPage]="pagination.itemsPerPage"
                   (pageChanged)="pageChanged($event)"
+                  
                   previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
     
       </pagination>

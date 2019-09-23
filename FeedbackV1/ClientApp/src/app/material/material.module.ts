@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Material from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogClose } from '@angular/material/dialog'
 
 
 
@@ -18,7 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     Material.MatPaginatorModule,
     Material.MatSortModule,
     BrowserAnimationsModule,
-    Material.MatFormFieldModule
+    Material.MatFormFieldModule,
+    Material.MatDialogModule,
+    // Material.MatDialogClose
 
 
   ],
@@ -28,7 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     Material.MatPaginatorModule,
     Material.MatSortModule,
     BrowserAnimationsModule,
-    Material.MatFormFieldModule
+    Material.MatFormFieldModule,
+    // Material.MatDialogClose
 
   ]
 

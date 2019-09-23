@@ -122,10 +122,10 @@
                 </div>
         </div>
         <div class="row">
-                <div class="col-md-12">
-                    <button  [disabled]="!requestForm.valid || !requestForm.dirty" type="submit" class="btn btn-primary mr-5" >Submit</button>
-                    <button  type="button" class="btn btn-danger " [routerLink]="['/all']" >Cancel</button>
-                </div>
+          <div class="col-md-12">
+            <button [disabled]="!requestForm.valid || !requestForm.dirty" type="submit" class="btn btn-lg submit col-sm-5">Submit</button>
+            <button type="button" class="btn btn-lg default col-sm-5 ml-4 " [routerLink]="['/all']" style="border: 2px solid gray ;">Cancel</button>
+          </div>
         </div>
     </form>
 </div>
