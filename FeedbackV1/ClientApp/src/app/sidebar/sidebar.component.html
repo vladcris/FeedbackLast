@@ -1,23 +1,23 @@
 
 <ul class="nav nav-pills flex-column text-center ">
-  <li class="nav-item mb-2">
-    <button class="btn " routerLinkActive="active" routerLink="/all"><i class="fas fa-globe"></i> Show all </button>
+         <li  class="nav-item mb-2">
+         <button class="btn " routerLinkActive="active" routerLink="/all"><i class="fas fa-globe"></i> Show all </button>
     
-  </li>
-        <li class="nav-item mb-2">
+          </li>
+        <li *ngIf="role() === 'employee' || role() === 'manager'" class="nav-item mb-2">
             <button class="btn " routerLink="/myfeedbacks"><i class="fas fa-calendar-plus"></i> My Feedbacks </button>
         </li>
-        <li class="nav-item mb-2" *ngIf="isEmployee()">
+        <li *ngIf="role() === 'admin'" class="nav-item mb-2" >
+            <button class="btn "routerLink="/admin"><i class="fas fa-eye" ></i> Manage Employees</button>
+        </li>
+        <li *ngIf="role() === 'admin' || role() === 'manager'" class="nav-item mb-2" >
             <button class="btn " routerLink="/adduser"><i class="fas fa-user-plus"></i> Add User</button>
         </li>
         <!--<li class="nav-item mb-2" *ngIf="isEmployee()">
             <button class="btn  "routerLink="/import"><i class="fas fa-upload"></i> Import</button>
         </li>-->
-        <li class="nav-item mb-2" *ngIf="isEmployee()">
+        <li class="nav-item mb-2" *ngIf="role() === 'manager'">
             <button class="btn "routerLink="/view"><i class="fas fa-eye" ></i> View Feedback</button>
-        </li>
-        <li class="nav-item mb-2" *ngIf="isEmployee()">
-            <button class="btn "routerLink="/admin"><i class="fas fa-eye" ></i> Manage Employees</button>
         </li>
         <!-- <li class="nav-item mb-2">
             <button class="btn "routerLink="/give-feedback">Give Feedback</button>

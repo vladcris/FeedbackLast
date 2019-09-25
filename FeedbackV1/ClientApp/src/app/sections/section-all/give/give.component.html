@@ -24,7 +24,7 @@
                   <div class="form-group">
                     <label for="">How would you rate your colleague <b>Punctuality</b>?</label>
                     <div>
-                      <rating [max]="4" [(ngModel)]="feedback.punctuality"  name="punctuality" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
+                      <rating [max]="4" [(ngModel)]="feedback.punctuality"  name="punctuality" required style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
                     </div>
                     <!--<div  *ngFor="let item of punct; let i=index">
 
@@ -49,7 +49,7 @@
                       <div class="form-group">
                         <label for="">How would you rate your colleague <b>Productivity</b>?</label>
                         <div>
-                          <rating [max]="4" [(ngModel)]="feedback.productivity"  name="productivity" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
+                          <rating [max]="4" [(ngModel)]="feedback.productivity"  name="productivity" required style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
                         </div>
                         <!--<div class="radio" *ngFor="let item of punct; let i=index">
       <label>
@@ -71,7 +71,7 @@
                               <div class="form-group">
                                 <label for="">How would you rate your colleague <b>Work Quality</b>?</label>
                                 <div>
-                                  <rating [max]="4" [(ngModel)]="feedback.workquality"  name="workquality" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
+                                  <rating [max]="4" [(ngModel)]="feedback.workquality" required name="workquality" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
 
                                 </div>
                                 <!--<div class="radio" *ngFor="let item of punct; let i=index">
@@ -95,7 +95,7 @@
                               <div class="form-group">
                                 <label for="">How would you rate your colleague <b>Communication Skills</b>?</label>
                                 <div>
-                                  <rating [max]="4" [(ngModel)]="feedback.commskills"  name="commskills" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
+                                  <rating [max]="4" [(ngModel)]="feedback.commskills" required name="commskills" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
                                 </div>
                                 <!--<div class="radio" *ngFor="let item of punct; let i=index">
           <label>

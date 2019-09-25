@@ -156,7 +156,7 @@
               <div class="form-group">
                 <label for="">How would you rate your colleague <b>Punctuality</b>?</label>
                 <div>
-                  <rating [max]="4" [(ngModel)]="feedback.punctuality" name="punctuality" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
+                  <rating [max]="4" [(ngModel)]="feedback.punctuality" name="punctuality" required style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
                 </div>
 
               </div>
@@ -167,7 +167,7 @@
               <div class="form-group">
                 <label for="">How would you rate your colleague <b>Productivity</b>?</label>
                 <div>
-                  <rating [max]="4" [(ngModel)]="feedback.productivity" name="productivity" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
+                  <rating [max]="4" [(ngModel)]="feedback.productivity" name="productivity" required style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
                 </div>
               </div>
             </div>
@@ -177,7 +177,7 @@
               <div class="form-group">
                 <label for="">How would you rate your colleague <b>Work Quality</b>?</label>
                 <div>
-                  <rating [max]="4" [(ngModel)]="feedback.workquality" name="workquality" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
+                  <rating [max]="4" [(ngModel)]="feedback.workquality" name="workquality" required style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
 
                 </div>
               </div>
@@ -189,7 +189,7 @@
               <div class="form-group">
                 <label for="">How would you rate your colleague <b>Communication Skills</b>?</label>
                 <div>
-                  <rating [max]="4" [(ngModel)]="feedback.commskills" name="commskills" style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
+                  <rating [max]="4" [(ngModel)]="feedback.commskills" name="commskills" required style="color: #0275d8;font-size: 26px;" [titles]="['Bad','Decent','Good','Very Good']"></rating>
                 </div>
               </div>
             </div>
@@ -203,11 +203,13 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <button [disabled]="!requestForm.valid || !requestForm.dirty" type="submit" (click)="onSendRequest()" class="btn btn-primary mr-5">Submit</button>
-              <button type="button" class="btn btn-danger " [routerLink]="['/myfeedbacks']">Cancel</button>
+
+            <div class="row">
+              <div class="col-md-12">
+                <button [disabled]="!requestForm.valid || !requestForm.dirty" type="submit" class="btn btn-lg submit col-sm-5">Submit</button>
+                <button type="button" class="btn btn-lg default col-sm-5 ml-4 " [routerLink]="['/myfeedbacks']" style="border: 2px solid gray ;">Cancel</button>
             </div>
+
           </div>
         </form>
       </div>

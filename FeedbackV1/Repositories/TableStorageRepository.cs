@@ -405,7 +405,7 @@ namespace FeedbackV1.Repositories
 
             var results = (await userTable.ExecuteQuerySegmentedAsync(new TableQuery<User>(), null)).AsQueryable();
             
-            results = results.Where(x => x.IsDeleted == false).Where(x => x.RowKey != userParams.UserId).OrderBy(x => x.Name);
+            results = results.Where(x => x.IsDeleted == false).Where(x => x.Role != "admin").Where(x => x.RowKey != userParams.UserId).OrderBy(x => x.Name);
 
             if ((!string.IsNullOrEmpty(userParams.Role) ) && userParams.Team)
             {

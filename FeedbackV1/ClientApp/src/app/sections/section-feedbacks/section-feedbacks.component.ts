@@ -28,13 +28,16 @@ export class SectionFeedbacksComponent implements OnInit {
       this.myFeedbacks = data['feedbacks'].result;
       // tslint:disable-next-line:no-string-literal
       this.pagination = data['feedbacks'].pagination;
-      // this.pagination.currentPage = 1;
-      // this.pagination.itemsPerPage = 6;
+      this.pagination.currentPage = 1;
+      this.pagination.itemsPerPage = 6;
     });
 
     this.feedbacksService.reloadMyFeedbacks.subscribe( () => {
       this.loadMyFeedbacks();
     });
+
+    this.pagination.currentPage = 1;
+    this.pagination.itemsPerPage = 6;
   }
 
   pageChanged(event: any): void {
@@ -60,7 +63,7 @@ export class SectionFeedbacksComponent implements OnInit {
 
   onClick8() {
     this.pagination.currentPage = 1;
-    this.pagination.itemsPerPage = 8;
+    this.pagination.itemsPerPage = 12;
     this.loadMyFeedbacks();
 }
 

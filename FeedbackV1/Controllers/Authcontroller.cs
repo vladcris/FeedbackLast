@@ -47,12 +47,13 @@ namespace FeedbackV1.Controllers
                  return BadRequest("Email already exists!");
             
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
+            var pass = userForRegisterDto.Password.ToString();
 
 
             ////sendgrid
             var CurrentUserId = (User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var userLogged = await repo.GetUser(CurrentUserId);
-            Execute(userLogged,userToCreate).Wait();
+            Execute(userLogged,userToCreate,pass).Wait();
 
             //// end
 
@@ -64,7 +65,7 @@ namespace FeedbackV1.Controllers
             return CreatedAtRoute("GetUser", new {controller = "User", id = createdUser.Id}, userToReturn);
         }
 
-            static async Task Execute(User sender, User receiver)
+            static async Task Execute(User sender, User receiver, string password)
              {
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);
@@ -72,7 +73,7 @@ namespace FeedbackV1.Controllers
             var subject = "Your account was created";
             var to = new EmailAddress(receiver.Email, receiver.Name);
             var plainTextContent = "Username : receiver.Name, Password:";
-            var htmlContent = "<strong>Username :  receiver.Email!</strong> <br> <strong> Password : userForRegister.Password</strong> ";
+            var htmlContent = "<strong>Username :  "+ receiver.Email  +"!</strong> <br> <strong> Password :" + password +"</strong> ";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
            

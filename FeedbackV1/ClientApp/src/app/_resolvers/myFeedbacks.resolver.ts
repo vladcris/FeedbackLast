@@ -10,7 +10,7 @@ import { Feedback } from '../_models/feedback.model';
 @Injectable()
 export class MyFeedbacksResolver implements Resolve<Feedback[]> {
     pageNumber = 1;
-    pageSize = 10;
+    pageSize = 6;
   constructor(private feedbacksService: FeedbacksService,
               private router: Router,
               private alertify: AlertifyService,

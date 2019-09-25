@@ -48,7 +48,7 @@ export class RequestComponent implements OnInit {
     this.loadUser();
     // tslint:disable-next-line:no-string-literal
     this.userParams.userId = this.route.snapshot.params['id'];
-    // this.loadEmployeesByManager();
+    this.loadEmployeesByManager();
 
   }
 
@@ -85,6 +85,10 @@ export class RequestComponent implements OnInit {
           this.employees = [];
           this.loadAllUsers();
           this.employees = this.choose.make ? this.users : [];
+          this.angajatName = [];
+          this.angajat = [];
+    } else if (this.choose.make === '') {
+          this.employees = [];
           this.angajatName = [];
           this.angajat = [];
     }

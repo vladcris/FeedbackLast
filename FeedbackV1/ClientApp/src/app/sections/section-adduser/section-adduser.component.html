@@ -98,7 +98,14 @@
                                  <div class="invalid-feedback" *ngIf="registerForm.get('dep_Id').hasError('required') && registerForm.get('dep_Id').touched">Department required</div>
                                </div>
 
-                               <button [disabled]="!registerForm.valid" type="submit" class="btn btn-lg submit col-sm-5">Submit</button>
+                               <!-- <button [disabled]="!registerForm.valid" type="submit" class="btn btn-lg submit col-sm-5">Submit</button> -->
+
+                               <div class="row">
+                                <div class="col-md-12">
+                                  <button [disabled]="!registerForm.valid" type="submit" class="btn btn-lg submit col-sm-5">Submit</button>
+                                  <button type="button" class="btn btn-lg default col-sm-5 ml-4 " [routerLink]="['/all']" style="border: 2px solid gray ;">Cancel</button>
+                              </div>
+                            </div>
                              </form>
         </div>
         <div class="col-sm-3"></div>
